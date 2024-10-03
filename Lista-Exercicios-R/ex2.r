@@ -8,17 +8,11 @@ notas$media <- (notas$ac1 * 0.4) + (notas$ac2 * 0.4) + (notas$prova_final * 0.2)
 
 notas$aprovado <- ifelse(notas$media >= 7, "Sim", "Não")
 
+contagem <- data.frame(Aprovado = c("Sim", "Não"), Contagem = c(nrow(aprovados), nrow(reprovados)))
+
 aprovados <- notas[notas$aprovado == "Sim", ]
 reprovados <- notas[notas$aprovado == "Não", ]
 
-contagem <- data.frame(Aprovado = c("Sim", "Não"), Contagem = c(nrow(aprovados), nrow(reprovados)))
-
-library(ggplot2)
-
-ggplot(contagem, aes(x = "", y = Contagem, fill = Aprovado)) +
-  geom_bar(width = 1, stat = "identity") +
-  coord_polar(theta = "y") +
-  labs(x = "", y = "", title = "Alunos Aprovados e Reprovados") +
-  theme_void() +
-  theme(legend.position = "none") +
-  geom_text(aes(label = paste0(Contagem, "\n(", round(Contagem/sum(Contagem)*100, 2), "%)")), position = position_stack(vjust = 0.5))
+barplot(contagem$Contagem, names.arg = contagem$Aprovado, 
+        main = "Contagem de Alunos Aprovados e Reprovados", 
+        xlab = "Aprovado/Reprovado", ylab = "Alunos", col = c('blue','red'))
