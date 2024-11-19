@@ -5,7 +5,7 @@ library(forecast)
 library(ggplot2)
 
 meses <- c("Jun 2023", "Jul 2023", "Ago 2023", "Set 2023", "Out 2023", "Nov 2023", "Dez 2023", "Jan 2024", "Fev 2024", "Mar 2024", "Abr 2024", "Mai 2024", "Jun 2024" , "Jul 2024", "Ago 2024", "Set 2024", "Out 2024", "Nov 2024") 
-custos <- c(0.82, 0.53, 0.91, 1.51, 1.17, 2.32, 1.31, 1.22, 0.95, 1.96, 2.45, 2.28, 1.94, 2.17, 2.90, 3.21, 2.45, 3.09) 
+custos <- c(0.10, 0.28, 0.68, 0.30, 0.58, 0.70, 1.24, 1.10, 1.37, 0.72, 0.80, 1.80, 1.62, 1.61, 2.32, 1.36, 1.75, 1.80) 
 
 # Criar uma série temporal (Time Series) - para realizar a previsão para os proximos 6 meses
 custo_temporal <- ts(custos, start = c(2023, 6), frequency = 12) 
@@ -52,14 +52,12 @@ lines(previsao$mean, col = "red", lwd = 2)
 
 # Gráfico de barras do gasto atual e gasto previsto
 ggplot(dados, aes(x = Mês, y = Custos, fill = Custos > max(Custos))) +
-  geom_bar(stat = "identity") +
-  scale_fill_manual(values = c("blue", "blue"), guide = "none") +
+  geom_bar(stat = "identity", fill= c(rep("blue", 18), rep("brown3", 6))) +
   labs(title = "Gasto Mensal da AWS - Gráfico de Barras", 
        x = "Mês", 
        y = "Gasto (USD)") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
 
 # Gráfico de área do gasto atual e gasto previsto
 ggplot(dados, aes(x = Mês, y = Custos, group = 1, fill = Custos > max(custos))) +
